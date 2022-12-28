@@ -1,0 +1,77 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Result | OCR Application</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: rgba(240, 197, 158, 0.753);
+        }
+        
+        #textValue {
+            margin: 20px, 20px, 20px, 20px;
+            padding: 20px, 20px, 20px, 20px;
+            background-color: rgb(143, 253, 253);
+            border: 5px black solid;
+        }
+        
+        .d-flex {
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+        
+        .col-lg-6 {
+            left: 25%;
+        }
+        
+        .form-control {
+            background-color: aquamarine;
+            color: black;
+        }
+        
+        #buttonn {
+            margin-top: 34%;
+            margin-left: 26.4%;
+        }
+        
+        .btn {
+            background-color: rgb(43, 143, 236);
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h2>OCR Application using Flask</h2>
+    </center>
+    <form class="d-flex">
+        <a href="/history" class="d-flex btn btn-primary">History</a>
+    </form>
+    <center>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <textarea class="form-control" rows="20">{{ text }}</textarea>
+            </div>
+        </div>
+    </center>
+
+    <!-- create download Button -->
+    <form id="buttonn" method="get" accept-charset="utf-8">
+        <button type="button" class='btn btn-info' onclick='downloadText()'><b>Download</b> </button>
+    </form>
+
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+    function downloadText() {
+        var text = document.getElementById('textValue').value;
+        var val = "data:x-application/text," + escape(text);
+        window.open(val);
+    }
+</script>
+
+</html>

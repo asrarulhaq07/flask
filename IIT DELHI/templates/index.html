@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag & Drop or Browse: File Upload image</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #5256ad;
+        }
+        
+        .drag-area {
+            border: 2px dashed #fff;
+            height: 500px;
+            width: 700px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .drag-area.active {
+            border: 2px solid #fff;
+        }
+        
+        .drag-area .icon {
+            font-size: 100px;
+            color: #fff;
+        }
+        
+        .drag-area header {
+            font-size: 30px;
+            font-weight: 500;
+            color: #fff;
+        }
+        
+        .drag-area span {
+            font-size: 25px;
+            font-weight: 500;
+            color: #fff;
+            margin: 10px 0 15px 0;
+        }
+        
+        .drag-area button {
+            padding: 10px 25px;
+            font-size: 20px;
+            font-weight: 500;
+            border: none;
+            outline: none;
+            background: #fff;
+            color: #5256ad;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .drag-area img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .submit {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="drag-area">
+        <header>Drag an Image File or PDF</header>
+        <span>OR</span>
+        <button>Browse File</button>
+        <input type="file" hidden>
+        <form action="/getocrimage" method="POST" enctype="ocrImage">
+            <button class="submit">Submit</button>
+        </form>
+    </div>
+
+
+</body>
+<script>
+    const dragArea = document.querySelector(".drag-area");
+    const button = document.querySelector("button");
+    const submit = document.querySelector(".submit");
+    const input = document.querySelector("input");
+    button.onclick = () => {
+        input.click();
+    }
+    input.addEventListener("change", function() {
+        showFile(this.files);
+    })
+    dragArea.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        dragArea.classList.add("active");
+    });
+    dragArea.addEventListener("dragleave", () => {
+        dragArea.classList.remove("active");
+    });
+    dragArea.addEventListener("drop", (event) => {
+        event.preventDefault();
+        const files = event.dataTransfer.files;
+        showFile(files);
+    });
+    // submit button goes to getimage.html
+    submit.addEventListener("click", () => {
+        window.location.href = "getimage.html";
+    })
+
+    function showFile(files) {
+        let file = files[0];
+        let fileType = file.type;
+        let validExtensions = ["image/jpeg", "image/jpg", "image/png", "application/pdf"];
+        if (validExtensions.includes(fileType)) {
+            let fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+        } else {
+            alert("This is not an Valid File!");
+            dragArea.classList.remove("active");
+        }
+    }
+</script>
+
+</html>
